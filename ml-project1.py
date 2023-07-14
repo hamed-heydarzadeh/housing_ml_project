@@ -56,9 +56,22 @@ plt.legend()
 # plt.show()
 
 # print(housing[["median_house_value", "median_income", "total_rooms"]].head(8))
-corr_matrix = housing.corr(numeric_only=True)
+# corr_matrix = housing.corr(numeric_only=True)
 # print(corr_matrix["median_house_value"].sort_values(ascending=False))
 
 attributes = ["median_house_value", "median_income", "total_rooms", "housing_median_age"]
 scatter_matrix(housing[attributes], figsize=(12, 8))
 # plt.show()
+housing.plot(kind="scatter", x="median_income", y="median_house_value", alpha=0.1)
+
+#### Attribute combination ####
+housing["rooms_per_hosehold"] = housing["total_rooms"] / housing["households"]
+housing["bedrooms_per_room"] = housing["total_bedrooms"]/housing["total_rooms"]
+housing["population_per_household"]=housing["population"]/housing["households"]
+corr_matrix = housing.corr(numeric_only=True)
+# print(corr_matrix["median_house_value"].sort_values(ascending=False))
+
+housing = strat_train_set.drop("median_house_value", axis=1)
+housing_label = strat_train_set["median_house_value"].copy()
+
+
